@@ -52,50 +52,137 @@
             data-menu-dropdown-timeout="500">
 
             <!--begin::Menu Nav-->
-            <ul class="menu-nav ">
-                <li class="menu-item {{ request()->routeIs('dashboard') ? 'menu-item-active' : '' }}"
+            <ul class="menu-nav">
+                {{-- Dashboard --}}
+                <li class="menu-item {{ request()->routeIs('admin.dashboard') ? 'menu-item-active' : '' }}"
                     aria-haspopup="true">
-                    <a href="/dashboard" class="menu-link">
+                    <a href="{{ route('admin.dashboard') }}" class="menu-link">
                         <span class="svg-icon menu-icon">
-
-                            <!--begin::Svg Icon | path:assets/media/svg/icons/Design/Layers.svg-->
-                            <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"
-                                width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
                                 <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-                                    <polygon points="0 0 24 0 24 24 0 24" />
+                                    <rect x="0" y="0" width="24" height="24" />
                                     <path
-                                        d="M12.9336061,16.072447 L19.36,10.9564761 L19.5181585,10.8312381 C20.1676248,10.3169571 20.2772143,9.3735535 19.7629333,8.72408713 C19.6917232,8.63415859 19.6104327,8.55269514 19.5206557,8.48129411 L12.9336854,3.24257445 C12.3871201,2.80788259 11.6128799,2.80788259 11.0663146,3.24257445 L4.47482784,8.48488609 C3.82645598,9.00054628 3.71887192,9.94418071 4.23453211,10.5925526 C4.30500305,10.6811601 4.38527899,10.7615046 4.47382636,10.8320511 L4.63,10.9564761 L11.0659024,16.0730648 C11.6126744,16.5077525 12.3871218,16.5074963 12.9336061,16.072447 Z"
-                                        fill="#000000" fill-rule="nonzero" />
-                                    <path
-                                        d="M11.0563554,18.6706981 L5.33593024,14.122919 C4.94553994,13.8125559 4.37746707,13.8774308 4.06710397,14.2678211 C4.06471678,14.2708238 4.06234874,14.2738418 4.06,14.2768747 L4.06,14.2768747 C3.75257288,14.6738539 3.82516916,15.244888 4.22214834,15.5523151 C4.22358765,15.5534297 4.2250303,15.55454 4.22647627,15.555646 L11.0872776,20.8031356 C11.6250734,21.2144692 12.371757,21.2145375 12.909628,20.8033023 L19.7677785,15.559828 C20.1693192,15.2528257 20.2459576,14.6784381 19.9389553,14.2768974 C19.9376429,14.2751809 19.9363245,14.2734691 19.935,14.2717619 L19.935,14.2717619 C19.6266937,13.8743807 19.0546209,13.8021712 18.6572397,14.1104775 C18.654352,14.112718 18.6514778,14.1149757 18.6486172,14.1172508 L12.9235044,18.6705218 C12.377022,19.1051477 11.6029199,19.1052208 11.0563554,18.6706981 Z"
+                                        d="M4,4 L11,4 C11.5522847,4 12,4.44771525 12,5 L12,11 C12,11.5522847 11.5522847,12 11,12 L4,12 C3.44771525,12 3,11.5522847 3,11 L3,5 C3,4.44771525 3.44771525,4 4,4 Z M4,13 L11,13 C11.5522847,13 12,13.4477153 12,14 L12,20 C12,20.5522847 11.5522847,21 11,21 L4,21 C3.44771525,21 3,20.5522847 3,20 L3,14 C3,13.4477153 3.44771525,13 4,13 Z M13,4 L20,4 C20.5522847,4 21,4.44771525 21,5 L21,11 C21,11.5522847 20.5522847,12 20,12 L13,12 C12.4477153,12 12,11.5522847 12,11 L12,5 C12,4.44771525 12.4477153,4 13,4 Z M13,13 L20,13 C20.5522847,13 21,13.4477153 21,14 L21,20 C21,20.5522847 20.5522847,21 20,21 L13,21 C12.4477153,21 12,20.5522847 12,20 L12,14 C12,13.4477153 12.4477153,13 13,13 Z"
                                         fill="#000000" opacity="0.3" />
                                 </g>
                             </svg>
-
-                            <!--end::Svg Icon-->
                         </span>
-                        <span class="menu-text">Dashboard</span></a>
+                        <span class="menu-text">Dashboard</span>
+                    </a>
                 </li>
 
-                @include('layouts.partials._menu', [
-                    'config' => config('menus.custom'),
-                    'sectionTitle' => 'Custom',
-                ])
+                {{-- Menu Section --}}
+                @canany(['user-list', 'role-list', 'ad-list'])
+                    <li class="menu-section">
+                        <h4 class="menu-text">Management</h4>
+                        <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
+                    </li>
+                @endcanany
 
-                @include('layouts.partials._menu', [
-                    'config' => config('menus.layouts'),
-                    'sectionTitle' => 'Layouts',
-                ])
+                {{-- Users --}}
+                @can('user-list')
+                    <li class="menu-item {{ request()->routeIs('admin.users.*') ? 'menu-item-active' : '' }}"
+                        aria-haspopup="true">
+                        <a href="{{ route('admin.users.index') }}" class="menu-link">
+                            <span class="svg-icon menu-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
+                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <polygon points="0 0 24 0 24 24 0 24" />
+                                        <path
+                                            d="M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z"
+                                            fill="#000000" fill-rule="nonzero" opacity="0.3" />
+                                        <path
+                                            d="M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z"
+                                            fill="#000000" fill-rule="nonzero" />
+                                    </g>
+                                </svg>
+                            </span>
+                            <span class="menu-text">Users</span>
+                        </a>
+                    </li>
+                @endcan
 
-                @include('layouts.partials._menu', [
-                    'config' => config('menus.crud'),
-                    'sectionTitle' => 'Crud',
-                ])
+                {{-- Roles --}}
+                @can('role-list')
+                    <li class="menu-item {{ request()->routeIs('admin.roles.*') ? 'menu-item-active' : '' }}"
+                        aria-haspopup="true">
+                        <a href="{{ route('admin.roles.index') }}" class="menu-link">
+                            <span class="svg-icon menu-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px" viewBox="0 0 24 24">
+                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <rect x="0" y="0" width="24" height="24" />
+                                        <path
+                                            d="M18,2 L20,2 C21.6568542,2 23,3.34314575 23,5 L23,19 C23,20.6568542 21.6568542,22 20,22 L18,22 L18,2 Z"
+                                            fill="#000000" opacity="0.3" />
+                                        <path
+                                            d="M5,2 L17,2 C18.6568542,2 20,3.34314575 20,5 L20,19 C20,20.6568542 18.6568542,22 17,22 L5,22 C4.44771525,22 4,21.5522847 4,21 L4,3 C4,2.44771525 4.44771525,2 5,2 Z M12,11 C13.1045695,11 14,10.1045695 14,9 C14,7.8954305 13.1045695,7 12,7 C10.8954305,7 10,7.8954305 10,9 C10,10.1045695 10.8954305,11 12,11 Z M7.00036205,16.4995035 C6.98863236,16.6619875 7.26484009,17 7.4041679,17 C11.463736,17 14.5228466,17 16.5815,17 C16.9988413,17 17,16.6359896 17,16.4995035 C17,14.7602746 15.683488,13 12,13 C8.316512,13 7.00036205,14.7602746 7.00036205,16.4995035 Z"
+                                            fill="#000000" />
+                                    </g>
+                                </svg>
+                            </span>
+                            <span class="menu-text">Roles & Permissions</span>
+                        </a>
+                    </li>
+                @endcan
 
-                @include('layouts.partials._menu', [
-                    'config' => config('menus.features'),
-                    'sectionTitle' => 'Features',
-                ])
+                {{-- Banner Ads --}}
+                @can('ad-list')
+                    <li class="menu-item {{ request()->routeIs('admin.ads.*') ? 'menu-item-active' : '' }}"
+                        aria-haspopup="true">
+                        <a href="{{ route('admin.ads.index') }}" class="menu-link">
+                            <span class="svg-icon menu-icon">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="24px" height="24px"
+                                    viewBox="0 0 24 24">
+                                    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                        <rect x="0" y="0" width="24" height="24" />
+                                        <path
+                                            d="M4,4 L20,4 C21.1045695,4 22,4.8954305 22,6 L22,18 C22,19.1045695 21.1045695,20 20,20 L4,20 C2.8954305,20 2,19.1045695 2,18 L2,6 C2,4.8954305 2.8954305,4 4,4 Z"
+                                            fill="#000000" opacity="0.3" />
+                                        <path
+                                            d="M18.5,13 C19.3284271,13 20,13.6715729 20,14.5 C20,15.3284271 19.3284271,16 18.5,16 C17.6715729,16 17,15.3284271 17,14.5 C17,13.6715729 17.6715729,13 18.5,13 Z M14.5,13 C15.3284271,13 16,13.6715729 16,14.5 C16,15.3284271 15.3284271,16 14.5,16 C13.6715729,16 13,15.3284271 13,14.5 C13,13.6715729 13.6715729,13 14.5,13 Z M10.5,13 C11.3284271,13 12,13.6715729 12,14.5 C12,15.3284271 11.3284271,16 10.5,16 C9.67157288,16 9,15.3284271 9,14.5 C9,13.6715729 9.67157288,13 10.5,13 Z M6.5,13 C7.32842712,13 8,13.6715729 8,14.5 C8,15.3284271 7.32842712,16 6.5,16 C5.67157288,16 5,15.3284271 5,14.5 C5,13.6715729 5.67157288,13 6.5,13 Z"
+                                            fill="#000000" />
+                                    </g>
+                                </svg>
+                            </span>
+                            <span class="menu-text">Banner Ads</span>
+                        </a>
+                    </li>
+                @endcan
+            </ul>
+
+            <ul class="menu-nav">
+                @canany(['news-list', 'job-list'])
+                    <li class="menu-section">
+                        <h4 class="menu-text">Content</h4>
+                        <i class="menu-icon ki ki-bold-more-hor icon-md"></i>
+                    </li>
+                @endcanany
+
+                {{-- News --}}
+                @can('news-list')
+                    <li class="menu-item {{ request()->routeIs('admin.news.*') ? 'menu-item-active' : '' }}"
+                        aria-haspopup="true">
+                        <a href="{{ route('admin.news.index') }}" class="menu-link">
+                            <span class="svg-icon menu-icon">
+                                <i class="flaticon2-paper text-warning"></i>
+                            </span>
+                            <span class="menu-text">News & Articles</span>
+                        </a>
+                    </li>
+                @endcan
+
+                {{-- Jobs --}}
+                @can('job-list')
+                    <li class="menu-item {{ request()->routeIs('admin.jobs.*') ? 'menu-item-active' : '' }}"
+                        aria-haspopup="true">
+                        <a href="{{ route('admin.jobs.index') }}" class="menu-link">
+                            <span class="svg-icon menu-icon">
+                                <i class="flaticon2-contract text-success"></i>
+                            </span>
+                            <span class="menu-text">Jobs & Vacancies</span>
+                        </a>
+                    </li>
+                @endcan
             </ul>
 
             <!--end::Menu Nav-->

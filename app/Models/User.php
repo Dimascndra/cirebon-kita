@@ -6,11 +6,13 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable;
+    use HasFactory, Notifiable, HasApiTokens, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -44,5 +46,21 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    /**
+     * Get user's job applications
+     */
+    public function jobApplications()
+    {
+        return $this->hasMany(JobApplication::class);
+    }
+
+    /**
+     * Check if user has applied to a job
+     */
+    public function hasAppliedTo(int $jobId): bool
+    {
+        return $this->jobApplications()->where('job_id', $jobId)->exists();
     }
 }

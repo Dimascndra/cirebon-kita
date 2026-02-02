@@ -1,21 +1,21 @@
 <!--begin::Header-->
 <div class="d-flex align-items-center justify-content-between flex-wrap p-8 bgi-size-cover bgi-no-repeat rounded-top"
-    style="background-image: url(assets/media/misc/bg-1.jpg)">
+    style="background-image: url({{ asset('assets/media/misc/bg-1.jpg') }})">
     <div class="d-flex align-items-center mr-2">
 
         <!--begin::Symbol-->
         <div class="symbol bg-white-o-15 mr-3">
-            <span class="symbol-label text-success font-weight-bold font-size-h4">S</span>
+            <span
+                class="symbol-label text-success font-weight-bold font-size-h4">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</span>
         </div>
 
         <!--end::Symbol-->
 
         <!--begin::Text-->
-        <div class="text-white m-0 flex-grow-1 mr-3 font-size-h5">Sean Stone</div>
+        <div class="text-white m-0 flex-grow-1 mr-3 font-size-h5">{{ auth()->user()->name }}</div>
 
         <!--end::Text-->
     </div>
-    <span class="label label-success label-lg font-weight-bold label-inline">3 messages</span>
 </div>
 
 <!--end::Header-->
@@ -24,18 +24,17 @@
 <div class="navi navi-spacer-x-0 pt-5">
 
     <!--begin::Item-->
-    <a href="/custom/apps/profile/profile-1/personal-information" class="navi-item px-8">
+    <a href="{{ route('dashboard') }}" class="navi-item px-8">
         <div class="navi-link">
             <div class="navi-icon mr-2">
-                <i class="flaticon2-calendar-3 text-success"></i>
+                <i class="flaticon2-pie-chart text-success"></i>
             </div>
             <div class="navi-text">
                 <div class="font-weight-bold">
-                    My Profile
+                    Dashboard
                 </div>
                 <div class="text-muted">
-                    Account settings and more
-                    <span class="label label-light-danger label-inline font-weight-bold">update</span>
+                    Ke halaman utama
                 </div>
             </div>
         </div>
@@ -44,55 +43,17 @@
     <!--end::Item-->
 
     <!--begin::Item-->
-    <a href="/custom/apps/inbox" class="navi-item px-8">
+    <a href="{{ route('profile.index') }}" class="navi-item px-8">
         <div class="navi-link">
             <div class="navi-icon mr-2">
-                <i class="flaticon2-mail text-warning"></i>
+                <i class="flaticon2-user-outline-symbol text-warning"></i>
             </div>
             <div class="navi-text">
                 <div class="font-weight-bold">
-                    My Messages
+                    Profil Saya
                 </div>
                 <div class="text-muted">
-                    Inbox and tasks
-                </div>
-            </div>
-        </div>
-    </a>
-
-    <!--end::Item-->
-
-    <!--begin::Item-->
-    <a href="custom/apps/profile/profile-2" class="navi-item px-8">
-        <div class="navi-link">
-            <div class="navi-icon mr-2">
-                <i class="flaticon2-rocket-1 text-danger"></i>
-            </div>
-            <div class="navi-text">
-                <div class="font-weight-bold">
-                    My Activities
-                </div>
-                <div class="text-muted">
-                    Logs and notifications
-                </div>
-            </div>
-        </div>
-    </a>
-
-    <!--end::Item-->
-
-    <!--begin::Item-->
-    <a href="/custom/apps/todo/tasks" class="navi-item px-8">
-        <div class="navi-link">
-            <div class="navi-icon mr-2">
-                <i class="flaticon2-hourglass text-primary"></i>
-            </div>
-            <div class="navi-text">
-                <div class="font-weight-bold">
-                    My Tasks
-                </div>
-                <div class="text-muted">
-                    latest tasks and projects
+                    Pengaturan akun
                 </div>
             </div>
         </div>
@@ -106,11 +67,9 @@
         <form method="POST" action="{{ route('logout') }}">
             @csrf
 
-            <a href="{{ route('logout') }}" target="_blank" class="btn btn-light-primary font-weight-bold"
+            <a href="{{ route('logout') }}" class="btn btn-light-primary font-weight-bold"
                 onclick="event.preventDefault(); this.closest('form').submit();">Sign Out</a>
         </form>
-
-        <a href="/custom/user/login-v2" target="_blank" class="btn btn-clean font-weight-bold">Upgrade Plan</a>
     </div>
 
     <!--end::Footer-->
