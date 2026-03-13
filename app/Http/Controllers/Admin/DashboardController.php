@@ -14,6 +14,11 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        return view('spa');
+    }
+
+    public function summary()
+    {
         // 1. Counters
         $totalUsers = User::count();
         $activeJobs = Job::where('status', 'active')->count();
@@ -44,13 +49,16 @@ class DashboardController extends Controller
             $counts[] = $record ? $record->count : 0;
         }
 
-        return view('dashboard', compact(
-            'totalUsers',
-            'activeJobs',
-            'totalViews',
-            'trendingPosts',
-            'dates',
-            'counts'
-        ));
+        return response()->json([
+            'success' => true,
+            'data' => compact(
+                'totalUsers',
+                'activeJobs',
+                'totalViews',
+                'trendingPosts',
+                'dates',
+                'counts'
+            ),
+        ]);
     }
 }

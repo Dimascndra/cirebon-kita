@@ -19,8 +19,7 @@ class NewsController extends Controller
     // Page View
     public function index()
     {
-        $categories = $this->newsService->getCategories(); // Feteched via service (cached)
-        return view('news.index', compact('categories'));
+        return view('spa');
     }
 
     // API Endpoint
@@ -36,12 +35,18 @@ class NewsController extends Controller
         ]);
     }
 
+    public function categories()
+    {
+        return response()->json([
+            'success' => true,
+            'data' => $this->newsService->getCategories(),
+        ]);
+    }
+
     // Detail View
     public function detail($slug)
     {
-        $data = $this->newsService->getPostBySlug($slug);
-        $post = $data['post'];
-        return view('news.show', compact('post', 'slug'));
+        return view('spa');
     }
 
     // Detail API

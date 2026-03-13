@@ -12,9 +12,21 @@ class UserController extends Controller
 {
     public function index()
     {
+        return view('spa');
+    }
+
+    public function list()
+    {
         $users = User::with('roles')->latest()->paginate(10);
-        $roles = Role::all();
-        return view('admin.users.index', compact('users', 'roles'));
+        $roles = Role::all(['id', 'name']);
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'users' => $users,
+                'roles' => $roles,
+            ],
+        ]);
     }
 
     public function store(Request $request)

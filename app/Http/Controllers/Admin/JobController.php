@@ -23,7 +23,7 @@ class JobController extends Controller
 
     public function index()
     {
-        return view('admin.jobs.index');
+        return view('spa');
     }
 
     public function getData()
@@ -55,8 +55,22 @@ class JobController extends Controller
 
     public function create()
     {
-        $companies = Company::all();
-        return view('admin.jobs.create', compact('companies'));
+        return view('spa');
+    }
+
+    public function show($id)
+    {
+        return view('spa');
+    }
+
+    public function meta()
+    {
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'companies' => Company::all(['id', 'name']),
+            ],
+        ]);
     }
 
     public function store(Request $request)
@@ -86,8 +100,17 @@ class JobController extends Controller
     public function edit($id)
     {
         $job = \App\Models\Job::findOrFail($id);
-        $companies = Company::all();
-        return view('admin.jobs.edit', compact('job', 'companies'));
+        return view('spa');
+    }
+
+    public function detail($id)
+    {
+        $job = \App\Models\Job::findOrFail($id);
+
+        return response()->json([
+            'success' => true,
+            'data' => $job,
+        ]);
     }
 
     public function update(Request $request, $id)

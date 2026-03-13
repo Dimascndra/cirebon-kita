@@ -20,6 +20,11 @@ class ApplicantController extends Controller
      */
     public function index(Request $request)
     {
+        return view('spa');
+    }
+
+    public function list(Request $request)
+    {
         $query = JobApplication::with(['user', 'job'])
             ->whereHas('job', function ($q) {
                 // TODO: Add company_id filter when Company model is ready
@@ -37,10 +42,10 @@ class ApplicantController extends Controller
         }
 
         $applications = $query->latest('applied_at')->paginate(20);
-
-        $statuses = ['pending', 'reviewing', 'shortlisted', 'rejected', 'accepted'];
-
-        return view('company.applicants.index', compact('applications', 'statuses'));
+        return response()->json([
+            'success' => true,
+            'data' => $applications,
+        ]);
     }
 
     /**
@@ -48,12 +53,17 @@ class ApplicantController extends Controller
      */
     public function show(JobApplication $application)
     {
-        // TODO: Add authorization check
-        // $this->authorize('view', $application);
+        return view('spa');
+    }
 
+    public function detail(JobApplication $application)
+    {
         $application->load(['user', 'job']);
 
-        return view('company.applicants.show', compact('application'));
+        return response()->json([
+            'success' => true,
+            'data' => $application,
+        ]);
     }
 
     /**
@@ -75,9 +85,11 @@ class ApplicantController extends Controller
             $request->notes
         );
 
-        return redirect()
-            ->back()
-            ->with('success', 'Application status updated successfully');
+        return response()->json([
+            'success' => true,
+            'message' => 'Application status updated successfully',
+            'data' => $application->fresh(['user', 'job']),
+        ]);
     }
 
     /**

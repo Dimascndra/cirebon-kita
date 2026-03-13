@@ -49,13 +49,7 @@ class ApplicantController extends Controller
      */
     public function index()
     {
-        $applications = auth()->user()
-            ->jobApplications()
-            ->with('job.company')
-            ->latest('applied_at')
-            ->paginate(10);
-
-        return view('applicants.index', compact('applications'));
+        return view('spa');
     }
 
     /**
@@ -63,11 +57,33 @@ class ApplicantController extends Controller
      */
     public function show($id)
     {
-        $application = auth()->user()
+        return view('spa');
+    }
+
+    public function list(Request $request)
+    {
+        $applications = $request->user()
+            ->jobApplications()
+            ->with('job.company')
+            ->latest('applied_at')
+            ->paginate(10);
+
+        return response()->json([
+            'success' => true,
+            'data' => $applications,
+        ]);
+    }
+
+    public function detail(Request $request, $id)
+    {
+        $application = $request->user()
             ->jobApplications()
             ->with('job.company')
             ->findOrFail($id);
 
-        return view('applicants.show', compact('application'));
+        return response()->json([
+            'success' => true,
+            'data' => $application,
+        ]);
     }
 }

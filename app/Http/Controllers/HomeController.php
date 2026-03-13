@@ -17,7 +17,7 @@ class HomeController extends Controller
 
     public function index()
     {
-        return view('home.index');
+        return view('spa');
     }
 
     private function jsonResponse($data, $message = '')

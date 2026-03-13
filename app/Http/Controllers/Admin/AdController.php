@@ -21,7 +21,7 @@ class AdController extends Controller
      */
     public function index()
     {
-        return view('admin.ads.index');
+        return view('spa');
     }
 
     /**
@@ -54,6 +54,16 @@ class AdController extends Controller
                     'status' => $ad->isScheduledActive() ? 'Active' : 'Inactive',
                 ];
             })
+        ]);
+    }
+
+    public function detail($id)
+    {
+        $ad = \App\Models\Ad::findOrFail($id);
+
+        return response()->json([
+            'success' => true,
+            'data' => $ad,
         ]);
     }
 

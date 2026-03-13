@@ -1,0 +1,266 @@
+.react-home {
+    background:
+        radial-gradient(circle at top right, rgba(54, 153, 255, 0.18), transparent 28%),
+        linear-gradient(180deg, #f5f8ff 0%, #ffffff 38%, #f7f5ef 100%);
+    color: #181c32;
+    min-height: calc(100vh - 160px);
+    padding-bottom: 64px;
+}
+
+.react-home__hero {
+    background-color: #181c32;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    color: #fff;
+    padding: 96px 24px 72px;
+}
+
+.react-home__hero-inner,
+.react-home__search,
+.react-home__banner,
+.react-home__content {
+    margin: 0 auto;
+    max-width: 1180px;
+}
+
+.react-home__hero-inner h1,
+.react-home__section-header h2,
+.react-home__search-card h2,
+.react-home__panel h2 {
+    font-family: Georgia, 'Times New Roman', serif;
+}
+
+.react-home__hero-inner {
+    max-width: 720px;
+}
+
+.react-home__hero-inner h1 {
+    font-size: clamp(2.5rem, 5vw, 4.5rem);
+    line-height: 1.05;
+    margin: 0 0 16px;
+}
+
+.react-home__hero-inner p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    margin: 0;
+    max-width: 620px;
+}
+
+.react-home__eyebrow {
+    color: #3699ff;
+    font-size: 0.82rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    margin-bottom: 14px;
+    text-transform: uppercase;
+}
+
+.react-home__hero-actions,
+.react-home__search-grid,
+.react-home__tag-list,
+.react-home__company-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px;
+}
+
+.react-home__hero-actions {
+    margin-top: 28px;
+}
+
+.react-home__button {
+    align-items: center;
+    border-radius: 999px;
+    display: inline-flex;
+    font-weight: 700;
+    justify-content: center;
+    min-height: 48px;
+    padding: 0 24px;
+    text-decoration: none;
+}
+
+.react-home__button--primary {
+    background: #3699ff;
+    color: #fff;
+}
+
+.react-home__button--ghost {
+    border: 1px solid rgba(255, 255, 255, 0.28);
+    color: #fff;
+}
+
+.react-home__search {
+    margin-top: -36px;
+    padding: 0 24px;
+    position: relative;
+}
+
+.react-home__search-card,
+.react-home__news-card,
+.react-home__job-card,
+.react-home__panel,
+.react-home__banner-card,
+.react-home__loading,
+.react-home__error {
+    backdrop-filter: blur(14px);
+    background: rgba(255, 255, 255, 0.92);
+    border: 1px solid rgba(24, 28, 50, 0.08);
+    border-radius: 28px;
+    box-shadow: 0 20px 60px rgba(24, 28, 50, 0.08);
+}
+
+.react-home__search-card {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: 1.1fr 1.4fr;
+    padding: 28px;
+}
+
+.react-home__search-grid input {
+    border: 1px solid rgba(24, 28, 50, 0.12);
+    border-radius: 18px;
+    min-height: 52px;
+    padding: 0 18px;
+}
+
+.react-home__banner,
+.react-home__content {
+    padding: 32px 24px 0;
+}
+
+.react-home__banner-card {
+    color: #181c32;
+    display: block;
+    padding: 24px 28px;
+    text-decoration: none;
+}
+
+.react-home__banner-card span {
+    color: #7e8299;
+    display: block;
+    font-size: 0.85rem;
+    margin-bottom: 6px;
+    text-transform: uppercase;
+}
+
+.react-home__content {
+    display: grid;
+    gap: 24px;
+    grid-template-columns: minmax(0, 1.6fr) minmax(300px, 0.9fr);
+}
+
+.react-home__section-header {
+    align-items: end;
+    display: flex;
+    justify-content: space-between;
+    margin: 0 0 18px;
+}
+
+.react-home__section-header a {
+    color: #3699ff;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.react-home__news-grid {
+    display: grid;
+    gap: 18px;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    margin-bottom: 36px;
+}
+
+.react-home__news-card,
+.react-home__job-card,
+.react-home__panel,
+.react-home__loading,
+.react-home__error {
+    padding: 24px;
+}
+
+.react-home__news-card span,
+.react-home__job-company,
+.react-home__company-item span {
+    color: #7e8299;
+    font-size: 0.88rem;
+}
+
+.react-home__news-card h3,
+.react-home__job-card h3 {
+    font-size: 1.15rem;
+    margin: 10px 0 8px;
+}
+
+.react-home__news-card p,
+.react-home__job-card p,
+.react-home__company-item span {
+    margin: 0;
+}
+
+.react-home__job-list,
+.react-home__company-list {
+    flex-direction: column;
+}
+
+.react-home__job-card,
+.react-home__company-item {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.react-home__panel--accent {
+    background: linear-gradient(180deg, #181c32, #223459);
+    color: #fff;
+}
+
+.react-home__panel--accent .react-home__eyebrow,
+.react-home__panel--accent .react-home__company-item span {
+    color: rgba(255, 255, 255, 0.72);
+}
+
+.react-home__tag {
+    background: #eef6ff;
+    border-radius: 999px;
+    color: #22528b;
+    font-size: 0.92rem;
+    font-weight: 600;
+    padding: 10px 14px;
+}
+
+.react-home__loading,
+.react-home__error {
+    color: #5e6278;
+}
+
+.react-home__error {
+    margin: 24px auto 0;
+    max-width: 1180px;
+}
+
+@media (max-width: 991px) {
+    .react-home__search-card,
+    .react-home__content {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 767px) {
+    .react-home__hero {
+        padding: 72px 20px 60px;
+    }
+
+    .react-home__search,
+    .react-home__banner,
+    .react-home__content {
+        padding-left: 20px;
+        padding-right: 20px;
+    }
+
+    .react-home__job-card,
+    .react-home__company-item,
+    .react-home__section-header {
+        flex-direction: column;
+    }
+}

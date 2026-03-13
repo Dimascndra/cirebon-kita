@@ -23,7 +23,7 @@ class NewsController extends Controller
 
     public function index()
     {
-        return view('admin.news.index');
+        return view('spa');
     }
 
     public function getData()
@@ -55,8 +55,22 @@ class NewsController extends Controller
 
     public function create()
     {
-        $categories = Category::all();
-        return view('admin.news.create', compact('categories'));
+        return view('spa');
+    }
+
+    public function show($id)
+    {
+        return view('spa');
+    }
+
+    public function meta()
+    {
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'categories' => Category::all(['id', 'name']),
+            ],
+        ]);
     }
 
     public function store(Request $request)
@@ -85,8 +99,17 @@ class NewsController extends Controller
     public function edit($id)
     {
         $post = \App\Models\Post::findOrFail($id);
-        $categories = Category::all();
-        return view('admin.news.edit', compact('post', 'categories'));
+        return view('spa');
+    }
+
+    public function detail($id)
+    {
+        $post = \App\Models\Post::findOrFail($id);
+
+        return response()->json([
+            'success' => true,
+            'data' => $post,
+        ]);
     }
 
     public function update(Request $request, $id)

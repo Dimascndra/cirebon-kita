@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\SpaController;
 use Illuminate\Support\Facades\Route;
 
 /* Route::get('/', function () {
@@ -12,26 +13,21 @@ use App\Http\Controllers\NewsController;
 use App\Http\Controllers\JobController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\SitemapController;
-use App\Http\Controllers\CompanyController; // Public
 use App\Http\Controllers\PageController;
 
 Route::get('/sitemap.xml', [SitemapController::class, 'index'])->name('sitemap');
 
-// Static Pages
-Route::get('/tentang', [PageController::class, 'about'])->name('pages.about');
-
-Route::get('/', [HomeController::class, 'index'])->name('home');
-Route::get('/berita', [NewsController::class, 'index'])->name('news.index');
-Route::get('/news/{slug}', [NewsController::class, 'detail'])->name('news.show');
-Route::get('/lowongan', [JobController::class, 'index'])->name('jobs.index');
-Route::get('/lowongan/{slug}', [JobController::class, 'detail'])->name('jobs.show');
-Route::get('/perusahaan', [CompanyController::class, 'index'])->name('companies.index');
-Route::get('/perusahaan/{slug}', [CompanyController::class, 'show'])->name('companies.show');
-
-// Auth Pages (SPA)
-Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
+Route::get('/', SpaController::class)->name('home');
+Route::get('/tentang', SpaController::class)->name('pages.about');
+Route::get('/berita', SpaController::class)->name('news.index');
+Route::get('/news/{slug}', SpaController::class)->name('news.show');
+Route::get('/lowongan', SpaController::class)->name('jobs.index');
+Route::get('/lowongan/{slug}', SpaController::class)->name('jobs.show');
+Route::get('/perusahaan', SpaController::class)->name('companies.index');
+Route::get('/perusahaan/{slug}', SpaController::class)->name('companies.show');
+Route::get('/login', SpaController::class)->name('login');
 Route::post('/login-web', [AuthController::class, 'webLogin'])->name('login.web'); // Hybrid Login
-Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
+Route::get('/register', SpaController::class)->name('register');
 
 // Dashboard - Redirect based on role
 Route::middleware('auth')->get('/dashboard', [\App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
@@ -40,13 +36,13 @@ Route::middleware('auth')->get('/dashboard', [\App\Http\Controllers\DashboardCon
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [\App\Http\Controllers\ProfileController::class, 'index'])->name('profile.index');
     Route::post('/profile', [\App\Http\Controllers\ProfileController::class, 'update'])->name('profile.update');
+    Route::get('/my-applications', [\App\Http\Controllers\ApplicantController::class, 'index'])->name('applications.index');
+    Route::get('/my-applications/{id}', [\App\Http\Controllers\ApplicantController::class, 'show'])->name('applications.show');
 });
 
 // Job Application Routes
 Route::middleware('auth')->group(function () {
     Route::post('/jobs/{job}/apply', [\App\Http\Controllers\ApplicantController::class, 'store'])->name('jobs.apply');
-    Route::get('/my-applications', [\App\Http\Controllers\ApplicantController::class, 'index'])->name('applications.index');
-    Route::get('/my-applications/{id}', [\App\Http\Controllers\ApplicantController::class, 'show'])->name('applications.show');
 });
 
 // Company Routes
@@ -89,4 +85,3 @@ Route::prefix('admin')->middleware(['auth', 'role:SuperAdmin|Admin'])->name('adm
 Route::get('/ad/click/{id}', [\App\Http\Controllers\Admin\AdController::class, 'trackClick'])->name('ad.click');
 
 require __DIR__ . '/auth.php';
-require __DIR__ . '/dynamic-menus.php';

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -11,9 +12,24 @@ class RoleController extends Controller
 {
     public function index()
     {
-        $roles = Role::withCount('users')->get();
-        $permissions = Permission::all();
-        return view('admin.roles.index', compact('roles', 'permissions'));
+        return view('spa');
+    }
+
+    public function list()
+    {
+        $roles = Role::with('permissions')->get()->map(function (Role $role) {
+            $role->users_count = User::role($role->name)->count();
+            return $role;
+        });
+        $permissions = Permission::all(['id', 'name']);
+
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'roles' => $roles,
+                'permissions' => $permissions,
+            ],
+        ]);
     }
 
     public function store(Request $request)

@@ -19,19 +19,19 @@ class AuthController extends Controller
     // View: Login Page
     public function showLogin()
     {
-        return view('auth.login');
+        return view('spa');
     }
 
     // View: Register Page
     public function showRegister()
     {
-        return view('auth.register');
+        return view('spa');
     }
 
     // View: Profile Page
     public function showProfile()
     {
-        return view('auth.profile');
+        return view('spa');
     }
 
     // API: Login
@@ -44,6 +44,7 @@ class AuthController extends Controller
 
         try {
             $data = $this->authService->login($request->only('email', 'password'));
+            $data['user'] = $this->userPayload($data['user']);
             return response()->json([
                 'success' => true,
                 'message' => 'Login berhasil',
@@ -69,6 +70,7 @@ class AuthController extends Controller
             $request->session()->regenerate();
             $user = \Illuminate\Support\Facades\Auth::user();
             $token = $user->createToken('auth_token')->plainTextToken; // Also give token for SPA parts
+            $user = $this->userPayload($user);
 
             return response()->json([
                 'success' => true,
@@ -96,6 +98,7 @@ class AuthController extends Controller
         ]);
 
         $data = $this->authService->register($request->all());
+        $data['user'] = $this->userPayload($data['user']);
 
         return response()->json([
             'success' => true,
@@ -120,7 +123,12 @@ class AuthController extends Controller
     {
         return response()->json([
             'success' => true,
-            'data' => $request->user()
+            'data' => $this->userPayload($request->user())
         ]);
+    }
+
+    protected function userPayload($user)
+    {
+        return $user->load('roles.permissions');
     }
 }

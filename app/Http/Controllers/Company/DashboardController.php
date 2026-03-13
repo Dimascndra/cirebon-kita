@@ -11,6 +11,11 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        return view('spa');
+    }
+
+    public function summary()
+    {
         // TODO: Filter by company when Company model is ready
         // For now, get all jobs for demo
 
@@ -47,19 +52,22 @@ class DashboardController extends Controller
             $counts[] = JobApplication::whereDate('applied_at', $date)->count();
         }
 
-        return view('company.dashboard', compact(
-            'totalJobs',
-            'activeJobs',
-            'totalApplications',
-            'pendingApplications',
-            'reviewingApplications',
-            'shortlistedApplications',
-            'acceptedApplications',
-            'rejectedApplications',
-            'recentApplications',
-            'popularJobs',
-            'dates',
-            'counts'
-        ));
+        return response()->json([
+            'success' => true,
+            'data' => compact(
+                'totalJobs',
+                'activeJobs',
+                'totalApplications',
+                'pendingApplications',
+                'reviewingApplications',
+                'shortlistedApplications',
+                'acceptedApplications',
+                'rejectedApplications',
+                'recentApplications',
+                'popularJobs',
+                'dates',
+                'counts'
+            ),
+        ]);
     }
 }

@@ -10,7 +10,15 @@ class ProfileController extends Controller
 {
     public function index()
     {
-        return view('profile.index');
+        return view('spa');
+    }
+
+    public function show(Request $request)
+    {
+        return response()->json([
+            'success' => true,
+            'data' => $request->user(),
+        ]);
     }
 
     public function update(Request $request)
@@ -52,7 +60,7 @@ class ProfileController extends Controller
         return response()->json([
             'success' => true,
             'message' => 'Profile updated successfully',
-            'user' => $user
+            'data' => $user
         ]);
     }
 }

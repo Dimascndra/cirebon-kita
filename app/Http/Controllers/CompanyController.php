@@ -19,8 +19,15 @@ class CompanyController extends Controller
      */
     public function index(Request $request)
     {
-        $companies = $this->companyService->getCompanies($request);
-        return view('companies.index', compact('companies'));
+        return view('spa');
+    }
+
+    public function list(Request $request)
+    {
+        return response()->json([
+            'success' => true,
+            'data' => $this->companyService->getCompanies($request),
+        ]);
     }
 
     /**
@@ -28,7 +35,21 @@ class CompanyController extends Controller
      */
     public function show($slug)
     {
-        $company = $this->companyService->getCompanyBySlug($slug);
-        return view('companies.show', compact('company'));
+        return view('spa');
+    }
+
+    public function detail($slug)
+    {
+        try {
+            return response()->json([
+                'success' => true,
+                'data' => $this->companyService->getCompanyBySlug($slug),
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Company not found',
+            ], 404);
+        }
     }
 }
