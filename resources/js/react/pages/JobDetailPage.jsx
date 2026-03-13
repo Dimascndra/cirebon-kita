@@ -27,12 +27,12 @@ export default function JobDetailPage() {
     }, [slug]);
 
     if (!job) {
-        return <div className="container page-section">Memuat detail lowongan...</div>;
+        return <div className="public-page-shell container page-section">Memuat detail lowongan...</div>;
     }
 
     return (
-        <div className="page">
-            <section className="page-header page-header--article">
+        <div className="page public-page-shell">
+            <section className="page-header page-header--article public-page-hero">
                 <div className="container article-hero">
                     <div>
                         <p className="eyebrow">{job.company?.name || 'Perusahaan'}</p>

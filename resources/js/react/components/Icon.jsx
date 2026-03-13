@@ -60,6 +60,49 @@ const icons = {
             <path d="m13 7 5 5-5 5" />
         </>
     ),
+    'arrow-right': (
+        <>
+            <path d="M5 12h14" />
+            <path d="m13 7 5 5-5 5" />
+        </>
+    ),
+    'map-pin': (
+        <>
+            <path d="M12 20s6-4.7 6-10a6 6 0 1 0-12 0c0 5.3 6 10 6 10Z" />
+            <circle cx="12" cy="10" r="2.2" />
+        </>
+    ),
+    clock: (
+        <>
+            <circle cx="12" cy="12" r="8.5" />
+            <path d="M12 7.8v4.8l3.2 1.9" />
+        </>
+    ),
+    layers: (
+        <>
+            <path d="m12 5 7 4-7 4-7-4 7-4Z" />
+            <path d="m5 13 7 4 7-4" />
+            <path d="m5 17 7 4 7-4" />
+        </>
+    ),
+    'alert-circle': (
+        <>
+            <circle cx="12" cy="12" r="8.5" />
+            <path d="M12 8.2v4.4" />
+            <path d="M12 16.5h.01" />
+        </>
+    ),
+    sun: (
+        <>
+            <circle cx="12" cy="12" r="3.5" />
+            <path d="M12 2.5v2.2M12 19.3v2.2M4.9 4.9l1.6 1.6M17.5 17.5l1.6 1.6M2.5 12h2.2M19.3 12h2.2M4.9 19.1l1.6-1.6M17.5 6.5l1.6-1.6" />
+        </>
+    ),
+    moon: (
+        <>
+            <path d="M18 14.5A6.5 6.5 0 0 1 9.5 6a7.5 7.5 0 1 0 8.5 8.5Z" />
+        </>
+    ),
 };
 
 export default function Icon({ name, className = '', size = 18 }) {
